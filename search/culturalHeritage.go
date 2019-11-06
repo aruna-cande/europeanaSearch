@@ -9,8 +9,7 @@ import (
 	"strconv"
 )
 
-//var Not_Found = error.new("Record Not found")
-
+//Search struct is used in order to bind frontend parameters to parameters used in the europeana search api
 type Search struct {
 	Query       string `form:"query" json:"query" binding:"required"`
 	Media       bool   `form:"media" json:"media"`
@@ -19,6 +18,7 @@ type Search struct {
 	Rows        int    `form:"rows" json:"rows"`
 }
 
+//CulturalHeritageRecord Simplified Europeana Cultural Heritage Record
 type CulturalHeritageRecord struct {
 	ID          string   `json:"id"`
 	Title       []string `json:"title"`
@@ -31,11 +31,13 @@ type CulturalHeritageRecord struct {
 	Creator     []string `json:"dcCreator"`
 }
 
+//CulturalHeritageItems contains the count of total records and all records retrieved by europeana API
 type CulturalHeritageItems struct {
 	ItemsCount int                      `json:"itemsCount"`
 	Items      []CulturalHeritageRecord `json:"items"`
 }
 
+//Service Injectable service
 type Service interface {
 	SearchCulturalHeritageRecords(searchData Search) CulturalHeritageItems
 }
@@ -43,15 +45,13 @@ type Service interface {
 type culturalHeritageRecordService struct {
 }
 
+//NewCulturalHeritageRecordService culturalHeritageRecordService constructor
 func NewCulturalHeritageRecordService() *culturalHeritageRecordService {
 	chs := new(culturalHeritageRecordService)
 	return chs
 }
 
-/*type HttpClient interface {
-	Do(req *http.Request) (*http.Response, error)
-}*/
-
+//Maps the serach parameters and executes the europeana api call
 func (chr *culturalHeritageRecordService) SearchCulturalHeritageRecords(client *http.Client, searchData Search) CulturalHeritageItems {
 	req, _ := http.NewRequest("GET", "https://www.europeana.eu/api/v2/search.json", nil)
 

@@ -36,7 +36,7 @@ func TestSearchCulturalHeritageRecords(t *testing.T) {
 
 	respItems := chrs.SearchCulturalHeritageRecords(client, searchData)
 	builtItems := buildChItems()
-	assert.Equal(t, respItems, builtItems)
+	assert.DeepEqual(t, respItems, builtItems)
 }
 
 func GetResponse(req *http.Request) *http.Response {
