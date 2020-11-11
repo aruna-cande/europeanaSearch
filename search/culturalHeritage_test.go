@@ -3,11 +3,12 @@ package search
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"testing"
 
-	"gotest.tools/assert"
+	"gotest.tools/v3/assert"
 )
 
 type RoundTripFunc func(req *http.Request) *http.Response
@@ -36,6 +37,7 @@ func TestSearchCulturalHeritageRecords(t *testing.T) {
 
 	respItems := chrs.SearchCulturalHeritageRecords(client, searchData)
 	builtItems := buildChItems()
+	fmt.Println("quero é cona")
 	assert.DeepEqual(t, respItems, builtItems)
 }
 
