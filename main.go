@@ -1,10 +1,11 @@
 package main
 
 import (
+	"europeanaSearch/search"
 	"net/http"
+	"os"
 	"time"
 
-	"github.com/aruna-cande/europeanaSearch"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -14,7 +15,7 @@ func main() {
 	r.Use(gin.Logger())
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://192.168.31.13:8081"},
+		AllowOrigins:     []string{os.Getenv("SEARCH_ORIGIN")}, //http://192.168.31.13:8081
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
