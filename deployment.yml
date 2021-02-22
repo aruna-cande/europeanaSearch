@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: europeana-search-deployment
+  labels:
+    app: europeana_search
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: europeana_search
+  template:
+    metadata:
+      labels:
+        app: europeana_search
+    spec:
+      containers:
+      - name: search
+        image: gcr.io/PROJECT_ID/IMAGE:TAG
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+        #imagePullPolicy: Never
+        env:
+        - name: SEARCH_ORIGIN
+          value: "*"
